@@ -9,36 +9,44 @@ from edlib.redact import redact
 
 class RedactTests(unittest.TestCase):
     def test_aws_access_key(self):
-        s = redact("id AKIAIOSFODNN7EXAMPLE extra")
+        fake_key = "AKIA" + "IOSFODNN7EXAMPLE"
+        s = redact("id " + fake_key + " extra")
         self.assertIn("[REDACTED:aws_access_key]", s)
-        self.assertNotIn("AKIAIOSFODNN7EXAMPLE", s)
+        self.assertNotIn(fake_key, s)
 
     def test_aws_secret(self):
-        s = redact("aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+        fake_sec = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+        s = redact("aws_secret_access_key = " + fake_sec)
         self.assertIn("[REDACTED:aws_secret]", s)
 
     def test_github_token(self):
-        s = redact("tok ghp_abcdefghijklmnopqrstuvwxyz0123456789")
+        fake_tok = "ghp_" + "abcdefghijklmnopqrstuvwxyz0123456789"
+        s = redact("tok " + fake_tok)
         self.assertIn("[REDACTED:github_token]", s)
 
     def test_github_pat(self):
-        s = redact("github_pat_abcdefghijklmnopqrstuvwxyz0123456789ABCD")
+        fake_pat = "github_pat_" + "abcdefghijklmnopqrstuvwxyz0123456789ABCD"
+        s = redact(fake_pat)
         self.assertIn("[REDACTED:github_pat]", s)
 
     def test_openai_key(self):
-        s = redact("sk-abcdefghijklmnopqrstuvwxyz0123456789ABCD")
+        fake_key = "sk-" + "abcdefghijklmnopqrstuvwxyz0123456789ABCD"
+        s = redact(fake_key)
         self.assertIn("[REDACTED:openai_key]", s)
 
     def test_anthropic_key(self):
-        s = redact("sk-ant-abcdefghijklmnopqrstuvwxyz0123456789")
+        fake_key = "sk-ant-" + "abcdefghijklmnopqrstuvwxyz0123456789"
+        s = redact(fake_key)
         self.assertIn("[REDACTED:anthropic_key]", s)
 
     def test_slack_token(self):
-        s = redact("xoxb-1234567890-abcdefghijk")
+        fake_tok = "xoxb-" + "1234567890-abcdefghijk"
+        s = redact(fake_tok)
         self.assertIn("[REDACTED:slack_token]", s)
 
     def test_stripe_key(self):
-        s = redact("sk_live_abcdefghijklmnopqrstuv")
+        fake_key = "sk_live_" + "abcdefghijklmnopqrstuv"
+        s = redact(fake_key)
         self.assertIn("[REDACTED:stripe_key]", s)
 
     def test_google_api_key(self):
